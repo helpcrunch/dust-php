@@ -38,6 +38,7 @@ class Dust implements \Serializable {
             "math" => new Helper\Math(),
             "eq" => new Helper\Eq(),
             "ne" => new Helper\Ne(),
+            "if" => new Helper\IfHelper(),
             "lt" => new Helper\Lt(),
             "lte" => new Helper\Lte(),
             "gt" => new Helper\Gt(),
