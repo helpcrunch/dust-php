@@ -1,11 +1,11 @@
 ﻿{
     "name": "dust-php",
-    "author": "Chad Retz",
-    "homepage": "http://github.com/cretz/dust-php",
-    "version": "0.1.0",
+    "author": "Kerry James",
+    "homepage": "https://github.com/Bloafer/dust-php",
+    "version": "0.1.1",
     "licenses": [{
         "type": "MIT",
-        "url": "https://raw.github.com/cretz/dust-php/master/LICENSE"
+        "url": "https://raw.githubusercontent.com/Bloafer/dust-php/master/LICENSE"
     }],
     "description": "Dust is a PHP templating language modelled off of dustjs",
     "keywords": ["php", "dust", "template", "pratphall", "dustjs"],

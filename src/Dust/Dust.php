@@ -3,21 +3,21 @@ namespace Dust;
 
 class Dust implements \Serializable {
     public $parser;
-    
+
     public $evaluator;
-    
+
     public $templates;
-    
+
     public $filters;
-    
+
     public $helpers;
-    
+
     public $automaticFilters;
-    
+
     public $includedDirectories = [];
-    
+
     public $autoloaderOverride;
-    
+
     public function __construct($parser = null, $evaluator = null) {
         if ($parser === null) $parser = new Parse\Parser();
         if ($evaluator === null) $evaluator = new Evaluate\Evaluator($this);
@@ -37,6 +37,7 @@ class Dust implements \Serializable {
             "select" => new Helper\Select(),
             "math" => new Helper\Math(),
             "eq" => new Helper\Eq(),
+            "ne" => new Helper\Ne(),
             "lt" => new Helper\Lt(),
             "lte" => new Helper\Lte(),
             "gt" => new Helper\Gt(),
@@ -48,18 +49,18 @@ class Dust implements \Serializable {
         ];
         $this->automaticFilters = [$this->filters['h']];
     }
-    
+
     public function compile($source, $name = null) {
         $parsed = $this->parser->parse($source);
         if ($name != null) $this->register($name, $parsed);
         return $parsed;
     }
-    
+
     public function compileFn($source, $name = null) {
         $parsed = $this->compile($source, $name);
         return function ($context) use ($parsed) { return $this->renderTemplate($parsed, $context); };
     }
-    
+
     public function resolveAbsoluteDustFilePath($path, $basePath = null) {
         //add extension if necessary
         if (substr_compare($path, '.dust', -5, 5) !== 0) $path .= '.dust';
@@ -77,7 +78,7 @@ class Dust implements \Serializable {
         }
         return null;
     }
-    
+
     public function compileFile($path, $basePath = null) {
         //resolve absolute path
         $absolutePath = $this->resolveAbsoluteDustFilePath($path, $basePath);
@@ -87,11 +88,11 @@ class Dust implements \Serializable {
         $compiled->filePath = $absolutePath;
         return $compiled;
     }
-    
+
     public function register($name, Ast\Body $template) {
         $this->templates[$name] = $template;
     }
-    
+
     public function loadTemplate($name, $basePath = null) {
         //if there is an override, use it instead
         if ($this->autoloaderOverride != null) return $this->autoloaderOverride->__invoke($name);
@@ -106,17 +107,17 @@ class Dust implements \Serializable {
         }
         return $this->templates[$name];
     }
-    
+
     public function render($name, $context) {
         return $this->renderTemplate($this->loadTemplate($name), $context);
     }
-    
+
     public function renderTemplate(Ast\Body $template, $context) {
         return $this->evaluator->evaluate($template, $context);
     }
-    
+
     public function serialize() { return serialize($this->templates); }
-    
+
     public function unserialize($data) { $this->templates = unserialize($data); }
-    
+
 }

@@ -95,6 +95,10 @@ module Dust.Helper {
         isValid(key: any, value: any) { return key == value; }
     }
 
+    export class Ne extends Comparison {
+        isValid(key: any, value: any) { return key != value; }
+    }
+
     export class Lt extends Comparison {
         isValid(key: any, value: any) { return key < value; }
     }

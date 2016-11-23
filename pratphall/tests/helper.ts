@@ -44,6 +44,18 @@ module Dust.Helper {
         }
     }
 
+    class NeTest extends ComparisonTestBase {
+        constructor() { super('ne'); }
+
+        testEq() {
+            this.assertValidResult(12, 12, false);
+            this.assertValidResult(12, '12', false);
+            this.assertValidResult(12, false, true);
+            this.assertValidResult([1, 2], [1, 2], false);
+            this.assertValidResult('FOO', 'foo', true);
+        }
+    }
+
     class LtTest extends ComparisonTestBase {
         constructor() { super('lt'); }
 
