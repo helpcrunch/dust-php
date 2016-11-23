@@ -14,12 +14,6 @@
         "type": "git",
         "url": "https://github.com/Bloafer/dust-php.git"
     },
-    "engines": { "node": ">=0.8.0" },
-    "devDependencies": {
-        "dustjs-linkedin": "1.2.0",
-        "jake": "latest",
-        "fs-extra": "latest"
-    },
     "replace": {
         "dust-php/dust-php": "0.1.0"
     }

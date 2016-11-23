@@ -18,5 +18,8 @@
     },
     "autoload": {
         "psr-0": { "Dust": "src/" }
+    },
+    "replace": {
+        "dust-php/dust-php": "0.1.0"
     }
 }
