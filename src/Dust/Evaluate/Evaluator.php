@@ -24,7 +24,7 @@ class Evaluator {
 
     public function evaluateBody(Ast\Body $body, Context $ctx, Chunk $chunk) {
         //go ahead and set the file path on the current context
-        $ctx->currentFilePath = $body->filePath;
+        if ($body->filePath !== null) $ctx->currentFilePath = $body->filePath;
         foreach ($body->parts as $part) {
             if ($part instanceof Ast\Comment) { }
             elseif ($part instanceof Ast\Section) $chunk = $this->evaluateSection($part, $ctx, $chunk);
@@ -255,7 +255,7 @@ class Evaluator {
     public function normalizeResolved(Context $ctx, $resolved, Chunk $chunk, Ast\Section $section = null) {
         $handledSpecial = true;
         while ($handledSpecial) {
-            if (is_callable($resolved)) {
+            if ($resolved instanceof \Closure) {
                 //call callback
                 $resolved = $this->handleCallback($ctx, $resolved, $chunk, $section);
             } elseif ($resolved instanceof Ast\Inline) {
