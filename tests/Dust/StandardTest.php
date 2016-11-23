@@ -28,15 +28,15 @@ class StandardTest extends DustTestBase {
         //class
         $this->assertTemplate($expected, $template, new StoogesContext());
     }
-    
+
     public function testArrayAccess() {
         $this->assertTemplate('123', '{#items}{.}{/items}', (object)["items" => new \ArrayObject([1, 2, 3])]);
     }
-    
+
     public function testStringIndex() {
         $this->assertTemplate('a => b,2 => c,foo => blah', '{#items}{$idx} => {.}{@sep},{/sep}{/items}', ["items" => ["a" => 'b', 2 => 'c', "foo" => 'blah']]);
     }
-    
+
     public function testAutoloaderOverride() {
         //override
         $autoloaderInvoked = false;
@@ -53,12 +53,12 @@ class StandardTest extends DustTestBase {
         ]);
         $this->assertTrue($autoloaderInvoked);
     }
-    
+
     public function testCustomFilter() {
         $this->dust->filters['stripTags'] = new StripTagsFilter();
         $this->assertTemplate('Value: foo, bar', 'Value: {contents|stripTags}', (object)["contents" => '<div>foo, <br /><strong>bar</strong></div>']);
     }
-    
+
     public function testCustomHelper() {
         //from manual
         $this->dust->helpers['substr'] = function (Evaluate\Chunk $chunk, Evaluate\Context $ctx, Evaluate\Bodies $bodies, Evaluate\Parameters $params) {
@@ -81,5 +81,12 @@ class StandardTest extends DustTestBase {
     public function testIssetAccess() {
         $this->assertTemplate('Farce,slapstick,musical comedy', '{#genres}{.}{@sep},{/sep}{/genres}', new StoogesContext());
     }
-    
+
+    public function testCustomHelperNotFound() {
+        try {
+            $this->assertTemplate('NULL', '{@customHelper param=myParam/}', (object)[]);
+        } catch (Evaluate\EvaluateException $exc) {
+            $this->assertEquals('Unable to find helper "customHelper"', $exc->getMessage());
+        }
+    }
 }
