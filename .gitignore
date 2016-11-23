@@ -8,3 +8,4 @@
 *.js.map
 /build
 /composer.lock
+.DS_Store

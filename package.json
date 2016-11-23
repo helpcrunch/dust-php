@@ -8,17 +8,19 @@
         "url": "https://raw.githubusercontent.com/Bloafer/dust-php/master/LICENSE"
     }],
     "description": "Dust is a PHP templating language modelled off of dustjs",
-    "keywords": ["php", "dust", "template", "pratphall", "dustjs"],
-    "bugs": { "url": "https://github.com/cretz/dust-php/issues" },
+    "keywords": ["php", "dust", "template", "dustjs"],
+    "bugs": { "url": "https://github.com/Bloafer/dust-php/issues" },
     "repository": {
         "type": "git",
-        "url": "https://github.com/cretz/dust-php.git"
+        "url": "https://github.com/Bloafer/dust-php.git"
     },
     "engines": { "node": ">=0.8.0" },
     "devDependencies": {
         "dustjs-linkedin": "1.2.0",
         "jake": "latest",
-        "fs-extra": "latest",
-        "pratphall": "latest"
+        "fs-extra": "latest"
+    },
+    "replace": {
+        "dust-php/dust-php": "0.1.0"
     }
 }
