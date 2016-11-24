@@ -1191,6 +1191,61 @@ class SpecTest extends \PHPUnit_Framework_TestCase {
         $this->runSpecTest($test);
     }
 
+    public function testFilterWithOtherText() {
+        $test = (object)[
+            "name" => "filter",
+            "source" => "This should not be touched. {#filter}foo {bar}{/filter}. This should also be untouched.",
+            "context" => (object)[
+                "filter" => function ($chunk, $context, $bodies) {
+                    return $chunk->tap(function ($data) {
+                        return strtoupper($data);
+                    })->render($bodies->block, $context)->untap();
+                },
+                "bar" => "bar"
+            ],
+            "expected" => "This should not be touched. FOO BAR. This should also be untouched.",
+            "message" => "should test the filter tag"
+        ];
+        $this->runSpecTest($test);
+    }
+
+    public function testFilterWithOtherTextAndMoreInternalText() {
+        $test = (object)[
+            "name" => "filter",
+            "source" => "This should not be touched. {#filter}foo bar foo bar foo bar{/filter}. This should also be untouched.",
+            "context" => (object)[
+                "filter" => function ($chunk, $context, $bodies) {
+                    return $chunk->tap(function ($data) {
+                        return strtoupper($data);
+                    })->render($bodies->block, $context)->untap();
+                },
+                "bar" => "bar"
+            ],
+            "expected" => "This should not be touched. FOO BAR FOO BAR FOO BAR. This should also be untouched.",
+            "message" => "should test the filter tag"
+        ];
+        $this->runSpecTest($test);
+    }
+
+
+    public function testDualFilterWithOtherTextAndMoreInternalText() {
+        $test = (object)[
+            "name" => "filter",
+            "source" => "This should not be touched. {#filter}foo bar foo bar foo bar{/filter}. This should also be untouched. {#filter}foo bar foo bar foo bar{/filter}. This should also be untouched.",
+            "context" => (object)[
+                "filter" => function ($chunk, $context, $bodies) {
+                    return $chunk->tap(function ($data) {
+                        return strtoupper($data);
+                    })->render($bodies->block, $context)->untap();
+                },
+                "bar" => "bar"
+            ],
+            "expected" => "This should not be touched. FOO BAR FOO BAR FOO BAR. This should also be untouched. FOO BAR FOO BAR FOO BAR. This should also be untouched.",
+            "message" => "should test the filter tag"
+        ];
+        $this->runSpecTest($test);
+    }
+
     public function testInvalidFilter() {
         $test = (object)[
             "name" => "Invalid filter",
