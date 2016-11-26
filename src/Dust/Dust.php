@@ -28,28 +28,28 @@ class Dust implements \Serializable {
         $this->evaluator = $evaluator;
         $this->templates = [];
         $this->filters = [
-            "s" => new Filter\SuppressEscape(),
-            "h" => new Filter\HtmlEscape(),
-            "j" => new Filter\JavaScriptEscape(),
-            "u" => new Filter\EncodeUri(),
-            "uc" => new Filter\EncodeUriComponent(),
-            "js" => new Filter\JsonEncode(),
-            "jp" => new Filter\JsonDecode()
+            "s"     => new Filter\SuppressEscape(),
+            "h"     => new Filter\HtmlEscape(),
+            "j"     => new Filter\JavaScriptEscape(),
+            "u"     => new Filter\EncodeUri(),
+            "uc"    => new Filter\EncodeUriComponent(),
+            "js"    => new Filter\JsonEncode(),
+            "jp"    => new Filter\JsonDecode()
         ];
         $this->helpers = [
-            "select" => new Helper\Select(),
-            "math" => new Helper\Math(),
-            "eq" => new Helper\Eq(),
-            "ne" => new Helper\Ne(),
-            "if" => new Helper\IfHelper(),
-            "lt" => new Helper\Lt(),
-            "lte" => new Helper\Lte(),
-            "gt" => new Helper\Gt(),
-            "gte" => new Helper\Gte(),
-            "default" => new Helper\DefaultHelper(),
-            "sep" => new Helper\Sep(),
-            "size" => new Helper\Size(),
-            "contextDump" => new Helper\ContextDump()
+            "select"        => new Helper\Select(),
+            "math"          => new Helper\Math(),
+            "eq"            => new Helper\Eq(),
+            "ne"            => new Helper\Ne(),
+            "if"            => new Helper\IfHelper(),
+            "lt"            => new Helper\Lt(),
+            "lte"           => new Helper\Lte(),
+            "gt"            => new Helper\Gt(),
+            "gte"           => new Helper\Gte(),
+            "default"       => new Helper\DefaultHelper(),
+            "sep"           => new Helper\Sep(),
+            "size"          => new Helper\Size(),
+            "contextDump"   => new Helper\ContextDump()
         ];
         $this->automaticFilters = [$this->filters['h']];
 
@@ -134,5 +134,14 @@ class Dust implements \Serializable {
     public function serialize() { return serialize($this->templates); }
 
     public function unserialize($data) { $this->templates = unserialize($data); }
+
+    public function getVersion(){
+        $package = (object)["version" => "Cannot determine version"];
+        $packageFile = __DIR__ . "/../../package.json";
+        if(file_exists($packageFile)){
+            $package = json_decode(file_get_contents($packageFile));
+        }
+        return $package->version;
+    }
 
 }
