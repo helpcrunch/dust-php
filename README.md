@@ -27,3 +27,7 @@ To install, simply require bloafer/dust-php in your composer.json like so:
 ## Contribute
 
 * Bug or feature? We welcome issues and pull requests! If you'd like to submit a PR. PRs should include unit tests.
+
+## Throughput
+
+[![Throughput Graph](https://graphs.waffle.io/Bloafer/dust-php/throughput.svg)](https://waffle.io/Bloafer/dust-php/metrics/throughput)
