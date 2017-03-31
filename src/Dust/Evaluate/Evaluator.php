@@ -300,9 +300,19 @@ class Evaluator {
     }
 
     public function toDustString($val) {
-        if (is_bool($val)) return $val ? 'true' : 'false';
-        if (is_array($val)) return implode(',', $val);
-        if (is_object($val) && !method_exists($val, '__toString')) return get_class($val);
+        if(is_bool($val)){
+            return $val ? 'true' : 'false';
+        }
+        if(is_array($val)){
+            if(is_array(reset($val))){
+                return '';
+            }else{
+                return implode(',', $val);
+            }
+        }
+        if(is_object($val) && !method_exists($val, '__toString')){
+            return get_class($val);
+        }
         return (string) $val;
     }
 

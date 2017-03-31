@@ -96,4 +96,12 @@ class StandardTest extends DustTestBase {
         $document = $this->dust->renderTemplate($compiled, array());
         $this->assertEquals('', $document);
     }
+
+    public function testArrayToStringConversionEvaluator(){
+        $testArray["data"]["data"]["data"] = true;
+        $template = '{data}';
+        $compiled = $this->dust->compile($template);
+        $document = $this->dust->renderTemplate($compiled, $testArray);
+        $this->assertEquals('', $document);
+    }
 }
