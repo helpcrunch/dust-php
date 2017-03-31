@@ -89,4 +89,11 @@ class StandardTest extends DustTestBase {
             $this->assertEquals('Unable to find helper "customHelper"', $exc->getMessage());
         }
     }
+
+    public function testEvaluateBodyNull(){
+        $template = '{#result}{@eq key=result.data value="Something"}{/eq}{:else}{/result}';
+        $compiled = $this->dust->compile($template);
+        $document = $this->dust->renderTemplate($compiled, array());
+        $this->assertEquals('', $document);
+    }
 }

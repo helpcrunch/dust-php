@@ -140,7 +140,9 @@ class Evaluator {
         if ($section->bodies != null && count($section->bodies) > 0) {
             foreach ($section->bodies as $value) {
                 if ($value->key == 'else') {
-                    $chunk = $this->evaluateBody($value->body, $ctx, $chunk);
+                    if(!is_null($value->body)){
+                        $chunk = $this->evaluateBody($value->body, $ctx, $chunk);
+                    }
                 }
             }
         }
