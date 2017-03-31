@@ -304,7 +304,14 @@ class Evaluator {
             return $val ? 'true' : 'false';
         }
         if(is_array($val)){
-            if(is_array(reset($val))){
+            $hasSubArray = false;
+            foreach($val as $valCheck){
+                if(is_array($valCheck)){
+                    $hasSubArray = true;
+                    break;
+                }
+            }
+            if($hasSubArray){
                 return '';
             }else{
                 return implode(',', $val);

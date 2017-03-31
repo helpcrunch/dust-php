@@ -98,6 +98,7 @@ class StandardTest extends DustTestBase {
     }
 
     public function testArrayToStringConversionEvaluator(){
+        $testArray["data"][0]              = true;
         $testArray["data"]["data"]["data"] = true;
         $template = '{data}';
         $compiled = $this->dust->compile($template);
