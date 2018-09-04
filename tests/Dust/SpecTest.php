@@ -44,6 +44,17 @@ class SpecTest extends \PHPUnit_Framework_TestCase {
         $this->runSpecTest($test);
     }
 
+    public function testShouldTestOneEnptyReference() {
+        $test = (object)[
+            "name" => "should test one empty reference",
+            "source" => "{?one}{/one}",
+            "context" => (object)[],
+            "expected" => "",
+            "message" => "should test one empty reference"
+        ];
+        $this->runSpecTest($test);
+    }
+
     public function testImplicit() {
         $test = (object)[
             "name" => "implicit",

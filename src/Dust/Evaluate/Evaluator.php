@@ -116,7 +116,11 @@ class Evaluator {
                 case '?':
                     //only if it exists
                     if ($this->exists($resolved)) {
-                        $chunk = $this->evaluateBody($section->body, $ctx, $chunk);
+                        if(!is_null($section->body)){
+                            $chunk = $this->evaluateBody($section->body, $ctx, $chunk);
+                        }else{
+                            $chunk = $this->evaluateBody(new Ast\Body(0) , $ctx, $chunk);
+                        }
                     } else {
                         $chunk = $this->evaluateElseBody($section, $ctx, $chunk);
                     }
