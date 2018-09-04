@@ -25,13 +25,15 @@ class Evaluator {
     public function evaluateBody(Ast\Body $body, Context $ctx, Chunk $chunk) {
         //go ahead and set the file path on the current context
         if ($body->filePath !== null) $ctx->currentFilePath = $body->filePath;
-        foreach ($body->parts as $part) {
-            if ($part instanceof Ast\Comment) { }
-            elseif ($part instanceof Ast\Section) $chunk = $this->evaluateSection($part, $ctx, $chunk);
-            elseif ($part instanceof Ast\Partial) $chunk = $this->evaluatePartial($part, $ctx, $chunk);
-            elseif ($part instanceof Ast\Special) $chunk = $this->evaluateSpecial($part, $ctx, $chunk);
-            elseif ($part instanceof Ast\Reference) $chunk = $this->evaluateReference($part, $ctx, $chunk);
-            elseif ($part instanceof Ast\Buffer) $chunk = $this->evaluateBuffer($part, $ctx, $chunk);
+        if(!is_null($body->parts)){
+            foreach ($body->parts as $part) {
+                if ($part instanceof Ast\Comment) { }
+                elseif ($part instanceof Ast\Section) $chunk = $this->evaluateSection($part, $ctx, $chunk);
+                elseif ($part instanceof Ast\Partial) $chunk = $this->evaluatePartial($part, $ctx, $chunk);
+                elseif ($part instanceof Ast\Special) $chunk = $this->evaluateSpecial($part, $ctx, $chunk);
+                elseif ($part instanceof Ast\Reference) $chunk = $this->evaluateReference($part, $ctx, $chunk);
+                elseif ($part instanceof Ast\Buffer) $chunk = $this->evaluateBuffer($part, $ctx, $chunk);
+            }
         }
         return $chunk;
     }
