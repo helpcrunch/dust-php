@@ -19,7 +19,11 @@ class Comparison {
             if ($selectInfo != null) {
                 $selectInfo->selectComparisonSatisfied = true;
             }
-            return $chunk->render($bodies->block, $context);
+            if(!is_null($bodies->block)){
+                return $chunk->render($bodies->block, $context);
+            }else{
+                return $chunk;
+            }
         } elseif (isset($bodies['else'])) {
             return $chunk->render($bodies['else'], $context);
         } else return $chunk;
