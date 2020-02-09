@@ -53,13 +53,6 @@ class Dust implements \Serializable {
         ];
         $this->automaticFilters = [$this->filters['h']];
 
-        if (is_array($options)) {
-            if (isset($options['extension'])) {
-                $extension = $options['extension'];
-                $this->_extension = $extension{0} === '.' ? substr($extension, 1) : $extension;
-            }
-        }
-
     }
 
     public function compile($source, $name = null) {
